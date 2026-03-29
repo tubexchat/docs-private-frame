@@ -126,7 +126,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Documentation Hub. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Lewis Zhang. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
