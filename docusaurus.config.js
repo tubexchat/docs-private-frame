@@ -107,7 +107,7 @@ const config = {
             label: 'Maintainer',
           },
           {
-            href: '/__login?logout=1',
+            href: 'pathname://__login?logout=1',
             label: 'Logout',
             position: 'right',
           },
