@@ -73,10 +73,44 @@ const config = {
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
-            label: 'Introduction',
+            label: 'Home',
             position: 'left',
           },
-
+          {
+            type: 'docSidebar',
+            sidebarId: 'smartContractSidebar',
+            position: 'left',
+            label: 'Smart Contract',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'apiSidebar',
+            position: 'left',
+            label: 'API',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'frontEndSidebar',
+            position: 'left',
+            label: 'FrontEnd',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'qaSidebar',
+            position: 'left',
+            label: 'QA',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'maintainerSidebar',
+            position: 'left',
+            label: 'Maintainer',
+          },
+          {
+            href: '/__login?logout=1',
+            label: 'Logout',
+            position: 'right',
+          },
         ],
       },
       footer: {
