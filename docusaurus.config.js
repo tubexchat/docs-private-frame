@@ -107,6 +107,18 @@ const config = {
             label: 'Maintainer',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'iosSidebar',
+            position: 'left',
+            label: 'iOS',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'androidSidebar',
+            position: 'left',
+            label: 'Android',
+          },
+          {
             href: 'pathname://__login?logout=1',
             label: 'Logout',
             position: 'right',
