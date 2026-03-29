@@ -1,0 +1,16 @@
+name = "docs-private-frame"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "./build"
+
+# ──────────────────────────────────────────────────────────────
+# 在 Cloudflare Dashboard 或通过 wrangler secret put 设置以下变量
+# 不要把真实密码硬编码在这里！
+#
+# wrangler pages secret put AUTH_PASSWORD --project-name=docs-private-frame
+# wrangler pages secret put AUTH_SECRET   --project-name=docs-private-frame
+# ──────────────────────────────────────────────────────────────
+
+[vars]
+# 这里填的是默认/开发中使用的占位值，真实生产密码通过 secret 设置
+AUTH_PASSWORD = "changeme"
+AUTH_SECRET   = "change-this-to-a-random-64-char-string"

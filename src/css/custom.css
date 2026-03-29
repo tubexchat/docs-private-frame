@@ -1,0 +1,110 @@
+/**
+ * Any CSS included here will be global. The variable names introspected
+ * from Docusaurus themes will automatically be available here.
+ */
+
+/* AXBlade Green: #00C087 */
+:root {
+  --ifm-color-primary: #00C087;
+  --ifm-color-primary-dark: #00ad7a;
+  --ifm-color-primary-darker: #00a373;
+  --ifm-color-primary-darkest: #00865f;
+  --ifm-color-primary-light: #00d394;
+  --ifm-color-primary-lighter: #00dd9b;
+  --ifm-color-primary-lightest: #1afab8;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability in dark mode */
+[data-theme='dark'] {
+  --ifm-color-primary: #00C087;
+  --ifm-color-primary-dark: #00ad7a;
+  --ifm-color-primary-darker: #00a373;
+  --ifm-color-primary-darkest: #00865f;
+  --ifm-color-primary-light: #00d394;
+  --ifm-color-primary-lighter: #00dd9b;
+  --ifm-color-primary-lightest: #1afab8;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 192, 135, 0.1);
+  --ifm-background-color: #0b0e11;
+}
+
+.navbar {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.navbar__brand {
+  font-weight: bold;
+  color: var(--ifm-color-primary);
+}
+
+/* Sidebar styling */
+.menu__link--active {
+  color: var(--ifm-color-primary) !important;
+}
+
+/* Sidebar menu items: more vertical spacing */
+.menu__link {
+  padding: 0.6rem 0.75rem;
+}
+
+/* Sidebar sub-menu items: smaller font */
+.menu__list .menu__list .menu__link {
+  font-size: 0.85rem;
+}
+
+/* 3-column like behavior (Main content max-width) */
+@media (min-width: 997px) {
+  .container {
+    max-width: 90% !important;
+  }
+}
+
+/* Custom code block styling */
+code {
+  background-color: rgba(0, 192, 135, 0.1);
+  color: var(--ifm-color-primary);
+  border-radius: 4px;
+}
+
+/* Code line highlight */
+.theme-code-block-highlighted-line {
+  background-color: rgba(0, 192, 135, 0.1) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 192, 135, 0.4);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: rgba(0, 192, 135, 0.05);
+  text-align: left;
+}
+
+td,
+th {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
