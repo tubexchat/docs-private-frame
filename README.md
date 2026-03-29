@@ -1,135 +1,144 @@
-# docs-private-frame
+<div align="center">
+  <h1>🔒 Docs Private Frame</h1>
+  <p><strong>A modern, privacy-first documentation framework built on top of Docusaurus 3.</strong></p>
+  <p>Seamlessly deployable to Cloudflare Pages with built-in password protection via Pages Functions.</p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-00C087.svg)](./LICENSE)
-
-基于 [Docusaurus 3](https://docusaurus.io/) 构建的**私有化文档框架**，部署于 Cloudflare Pages，通过 Pages Functions 实现密码保护。
-
-## ✨ 特性
-
-- 📝 **Markdown / MDX** — 使用 Markdown 和 React 组件编写文档
-- 🔒 **私有化访问** — Cloudflare Pages Functions 拦截所有请求，未登录自动跳转登录页
-- 🔑 **Cookie 会话** — HMAC-SHA256 签名，HttpOnly + Secure，7 天有效期
-- 🔍 **本地搜索** — 集成 `@easyops-cn/docusaurus-search-local`，无需第三方服务
-- 🌗 **深色模式** — 原生浅色/深色主题切换
-- ☁️ **一键部署** — `deploy-cf.sh` 完成构建 + 上传全流程
+  <p>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-00C087.svg?style=for-the-badge" alt="License: MIT" /></a>
+    <a href="https://docusaurus.io/"><img src="https://img.shields.io/badge/Built_with-Docusaurus_3-2E8555?style=for-the-badge&logo=docusaurus" alt="Docusaurus 3" /></a>
+    <a href="https://pages.cloudflare.com/"><img src="https://img.shields.io/badge/Deployed_on-Cloudflare_Pages-F38020?style=for-the-badge&logo=cloudflare" alt="Cloudflare Pages" /></a>
+  </p>
+</div>
 
 ---
 
-## 🚀 快速开始
+## ✨ Features
 
-### 环境要求
+- **📝 Markdown / MDX First** — Write docs using standard Markdown or embed React components via MDX.
+- **🔒 Private By Default** — Secure Cloudflare Pages Functions middleware intercepts all requests; unauthenticated users are redirected cleanly to a beautiful login screen.
+- **🔑 Secure Sessions** — Built using HMAC-SHA256 signed HttpOnly + Secure cookies with a default 7-day expiration.
+- **🔍 Offline Local Search** — Integrated `@easyops-cn/docusaurus-search-local` for instant, privacy-respecting offline search without third-party services.
+- **🌗 Dark Mode Ready** — Native light/dark theme toggle out of the box.
+- **☁️ 1-Click Deployment** — Includes `deploy-cf.sh` to seamlessly build and deploy the framework.
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
 
 - [Node.js](https://nodejs.org/) >= 18.0
 - [npm](https://www.npmjs.com/)
-- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) （部署时需要）
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) (Required for deployment)
 
-### 本地开发
+### Local Development
 
 ```bash
-# 安装依赖
+# 1. Install dependencies
 npm install
 
-# 启动开发服务器（不含登录保护）
+# 2. Start the local development server (No auth interception)
 npm start
 ```
 
-> 本地开发时 (`npm start`) **不会触发**登录中间件，可直接访问 `http://localhost:3000`。
-> 如需在本地测试完整的登录流程，使用：
->
+> **Note:** Running `npm start` **does not** trigger the Cloudflare authentication middleware. You can access the site directly at `http://localhost:3000`.
+> 
+> To test the complete login flow locally, run:
 > ```bash
-> npm run cf:preview   # 构建 + wrangler pages dev
+> npm run cf:preview   # Builds production static files & runs wrangler pages dev
 > ```
 
 ---
 
-## 📂 项目结构
+## 📂 Project Structure
 
-```
+```text
 docs-private-frame/
-├── docs/                    # Markdown 文档（侧边栏自动生成）
+├── docs/                    # Markdown content (sidebar is auto-generated)
 ├── src/
-│   ├── css/custom.css       # 全局样式（品牌色 #00C087）
-│   └── theme/               # Docusaurus 主题覆盖
-├── static/                  # 静态资源（图片、favicon）
+│   ├── css/custom.css       # Global styles (Brand color: #00C087)
+│   └── theme/               # Docusaurus theme overrides
+├── static/                  # Static assets (images, favicon)
 ├── functions/
-│   └── _middleware.js       # ⭐ Cloudflare Pages 认证中间件
-├── docusaurus.config.js     # Docusaurus 核心配置
-├── sidebars.js              # 侧边栏结构
-├── wrangler.toml            # Cloudflare Pages 配置
-└── deploy-cf.sh             # 一键部署脚本
+│   └── _middleware.js       # ⭐ Cloudflare Pages Authentication Middleware
+├── docusaurus.config.js     # Docusaurus core configuration
+├── sidebars.js              # Sidebar structure configuration
+├── wrangler.toml            # Cloudflare Pages configuration
+└── deploy-cf.sh             # 1-Click deployment script
 ```
 
 ---
 
-## 🔒 登录认证
+## 🔒 Authentication System
 
-认证逻辑完全由 `functions/_middleware.js` 实现，**无需额外服务**。
+The entire login logic is handled natively by `functions/_middleware.js`. **No external database or services are required**.
 
-| 路由 | 行为 |
+| Route | Behavior |
 |------|------|
-| `GET /__login` | 显示登录页面 |
-| `POST /__login` | 验证密码，成功后写入 Cookie |
-| `GET /__login?logout=1` | 清除 Cookie，退出登录 |
-| 其他所有路径 | 验证 Cookie，未通过则跳转 `/__login` |
+| `GET /__login` | Renders the beautiful auth screen. |
+| `POST /__login` | Validates the password and issues a secure session cookie. |
+| `GET /__login?logout=1` | Destroys the cookie and processes logout. |
+| All other paths | Validates the cookie payload. Redirects to `/__login` if missing or invalid. |
 
-### 环境变量
+### Environment Variables
 
-| 变量 | 说明 |
+| Variable | Description |
 |------|------|
-| `AUTH_PASSWORD` | 访问密码 |
-| `AUTH_SECRET` | Cookie 签名密钥（建议 48+ 字节随机字符串） |
+| `AUTH_PASSWORD` | The master password to access your documentation. |
+| `AUTH_SECRET` | Secret key used to sign session cookies (Recommended: 48+ chars random string). |
 
-> ⚠️ **不要把真实密码写在代码里！** 通过 Cloudflare Secret 注入：
+> [!WARNING]
+> **Never hardcode passwords in your source base!** Inject them securely via Cloudflare Secrets:
 >
 > ```bash
 > wrangler pages secret put AUTH_PASSWORD --project-name=docs-private-frame
 > wrangler pages secret put AUTH_SECRET   --project-name=docs-private-frame
->
-> # 生成强随机 AUTH_SECRET：
-> openssl rand -base64 48
 > ```
+> *(Tip: Generate a strong secret by running `openssl rand -base64 48`)*
 
 ---
 
-## ☁️ 部署到 Cloudflare Pages
+## ☁️ Deployment (Cloudflare Pages)
 
-### 方式一：一键脚本
+### Method 1: The Deployment Script
+
+We've bundled a convenient bash script that handles building and uploading:
 
 ```bash
 chmod +x deploy-cf.sh
 ./deploy-cf.sh
 ```
 
-### 方式二：手动
+### Method 2: Manual Deployment
 
 ```bash
-# 1. 构建静态文件
+# 1. Build the production static bundle
 npm run build
 
-# 2. 部署到 Cloudflare Pages（含 Functions）
+# 2. Deploy to Cloudflare Pages (Deploying the static bundle + Functions)
 wrangler pages deploy build --project-name=docs-private-frame
 ```
 
-### 首次部署后
+### Post-Deployment Checklist
 
-务必通过 Secret 设置生产密码（见上方环境变量说明）。  
-在 Cloudflare Dashboard → Pages → `docs-private-frame` → Settings → Environment variables 中也可以可视化设置。
+After your first successful deployment, you **must set your production `.env` variables** so the authentication middleware works properly.  
+You can configure these directly in your Cloudflare dashboard:  
+**Cloudflare Dashboard → Pages → `docs-private-frame` → Settings → Environment variables**
 
 ---
 
-## 🛠️ 常用命令
+## 🛠️ Common Commands
 
-| 命令 | 说明 |
+| Command | Description |
 |------|------|
-| `npm start` | 本地开发（无登录拦截） |
-| `npm run build` | 构建生产静态文件 |
-| `npm run cf:preview` | 本地完整预览（含 Pages Functions） |
-| `npm run serve` | 本地预览构建产物 |
-| `./deploy-cf.sh` | 构建并部署到 Cloudflare Pages |
+| `npm start` | Local development server (No login interception). |
+| `npm run build` | Builds the static site for production. |
+| `npm run cf:preview` | Local preview simulating the full Cloudflare Pages environment (includes auth). |
+| `npm run serve` | Serves the built static files locally. |
+| `./deploy-cf.sh` | Compiles and deploys the project to Cloudflare. |
 
 ---
 
 ## 📄 License
 
-[MIT](./LICENSE)
-
+This framework is open-sourced under the [MIT License](./LICENSE).
